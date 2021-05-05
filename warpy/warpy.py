@@ -44,7 +44,9 @@ class Worldstate:
 
     async def cambion_status(self):
         url = WARFRAME_API + '/{platform}/cambionCycle'.format(platform=self.platform)
-        return await self._fetch(url)
+        json = await self._fetch(url)
+        json["state"] = json["active"]
+        return json
 
     async def cetus_status(self):
         url = WARFRAME_API + '/{platform}/cetusCycle'.format(platform=self.platform)
@@ -131,7 +133,9 @@ class Worldstate:
 
     async def vallis_status(self):
         url = WARFRAME_API + '/{platform}/vallisCycle'.format(platform=self.platform)
-        return await self._fetch(url)
+        json = await self._fetch(url)
+        json['state'] = "warm" if json["isWarm"] else "cold"
+        return json
 
     async def void_trader(self):
         url = WARFRAME_API + '/{platform}/voidTrader'.format(platform=self.platform)
